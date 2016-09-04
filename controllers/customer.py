@@ -2,7 +2,10 @@
 
 @auth.requires_login()
 def index():
-    return locals()
+    a = auth.user
+    addresses = db(db.address.user_id == auth.user.id).select()
+
+    return dict(var=a,addresses = addresses)
 
 @auth.requires_login()
 def orders():
@@ -32,15 +35,21 @@ def select_address():
 
 @auth.requires_login()
 def create_address():
+    now = datetime.datetime.now()
+    span = datetime.timedelta(days=100)
+    product_list = db(db.product.created_on >= (now-span)).select(limitby=(0,6), orderby=~db.product.created_on)
+
+
+
     db.address.user_id.default = auth.user.id
     db.address.user_id.readable = db.address.user_id.writable = False
 
     form = SQLFORM(db.address)
     if form.process().accepted:
         if session.cart and session.balance != 0:
-            redirect(URL('default', 'select_address'))
+            redirect(URL('customer', 'select_address'))
         else:
-            redirect(URL('default', 'index'))
+            redirect(URL('customer', 'index'))
     return dict(form=form)
 
 def user():

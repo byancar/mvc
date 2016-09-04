@@ -2530,3 +2530,31 @@ height: 256px;
   display: none;
 }
 
+td.w2p_fw {padding: 5px;}
+.w2p_fw input[type="text"],.w2p_fw input[type="password"] {width: 250px;}
+.w2p_fw input[type="submit"]{display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;}
+td.w2p_fl,td.w2p_fw,td.w2p_fc {vertical-align:top}
+td.w2p_fl {text-align:left}
+td.w2p_fl, td.w2p_fw {padding-right:7px}
+td.w2p_fl,td.w2p_fc {padding-top:4px}
+div.w2p_export_menu {margin:5px 0}
+div.w2p_export_menu a, div.w2p_wiki_tags a, div.w2p_cloud a {margin-left:5px; padding:2px 5px; background-color:#f1f1f1; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;}
+div.error_wrapper {display:block}
+div.error {
+    color:red;
+    padding:5px;
+    display:inline-block;
+}

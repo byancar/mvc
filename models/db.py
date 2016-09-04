@@ -24,14 +24,13 @@ plugins = PluginManager()
 
 ## custom fields for user
 auth.settings.extra_fields['auth_user'] = [
-    Field('birth_date', 'datetime', label=T('Birth Date'), requires=IS_DATE()),
-    Field('genre', label=T('Genre'), requires = IS_IN_SET([
-                                                            ('0', T('Female')),
-                                                            ('1', T('Male')), 
-                                                            ('2', T('Other'))
-                                                            ], zero = T('Select one')
+    Field('birth_date', 'datetime', label=T('Data de nascimento'), requires=IS_DATE()),
+    Field('genre', label=T('Sexo'), requires = IS_IN_SET([
+                                                            ('0', T('Feminino')),
+                                                            ('1', T('Masculino')), 
+                                                            ('2', T('Outro'))
+                                                            ], zero = T('Selecione')
                                                             )),
-    Field('cssc', 'integer', label=T('User SSC (social security card)'))
     ]
 ## create all tables
 auth.define_tables(username=False)

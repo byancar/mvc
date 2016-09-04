@@ -32,7 +32,11 @@ def cart():
 def index():
     now = datetime.datetime.now()
     span = datetime.timedelta(days=100)
-    product_list = db(db.product.created_on >= (now-span)).select(limitby=(0,6), orderby=~db.product.created_on)
+    if request.vars.category:
+        product_list = db(db.product.default_category == request.vars.category).select(limitby=(0,20),
+                                                                            orderby=db.product.name)
+    else:
+        product_list = db(db.product).select(limitby=(0,20), orderby=~db.product.name)   
     return locals()
 
 def search():
@@ -47,6 +51,18 @@ def pages():
 
 @auth.requires_login()
 def checkout():
+    db.pending_transaction.user_id.default = auth.user.id
+    db.pending_transaction.user_id.readable = db.pending_transaction.user_id.writable = False
+    db.pending_transaction.confirmed.readable = db.pending_transaction.confirmed.writable = False
+
+    pending = dict(user_id=auth.user.id,
+                    products=session.cart,
+                    ammount=session.balance)
+
+    pending_record  = db.pending_transaction.insert(**pending)
+    pending['id']   = pending_record
+    session.pending = pending
+    #redirect(URL('default', 'paypal'))
     return locals()
 	
 def user():
